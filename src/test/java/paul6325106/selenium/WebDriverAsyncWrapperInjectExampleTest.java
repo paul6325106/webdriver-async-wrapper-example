@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class WebDriverAsyncWrapperExampleTest {
+public class WebDriverAsyncWrapperInjectExampleTest {
 
     private WebDriver webDriver;
 
@@ -30,7 +30,8 @@ public class WebDriverAsyncWrapperExampleTest {
     @Test
     public void testWithoutInitialiseJavascript() throws Exception {
         try {
-            new WebDriverAsyncWrapperExample(webDriver, 5000).getMessage();
+            new WebDriverAsyncWrapperInjectExample(webDriver, 5000).getMessage();
+            fail("Expected JavascriptException");
         } catch (final JavascriptException e) {
             assertTrue(e.getMessage().contains("webDriverAsyncWrapperExample is not defined"));
         }
@@ -39,7 +40,7 @@ public class WebDriverAsyncWrapperExampleTest {
     @Test
     public void testTimeout() throws Exception {
         try {
-            final WebDriverAsyncWrapperExample wrapper = new WebDriverAsyncWrapperExample(webDriver, 500);
+            final WebDriverAsyncWrapper wrapper = new WebDriverAsyncWrapperInjectExample(webDriver, 500);
             wrapper.initialiseJavascript();
             wrapper.getMessage();
             fail("Expected timeout");
@@ -51,7 +52,7 @@ public class WebDriverAsyncWrapperExampleTest {
     @Test
     public void testJavaSideErrorCatching() throws Exception {
         try {
-            final WebDriverAsyncWrapperExample wrapper = new WebDriverAsyncWrapperExample(webDriver, 500);
+            final WebDriverAsyncWrapper wrapper = new WebDriverAsyncWrapperInjectExample(webDriver, 500);
             wrapper.initialiseJavascript();
             wrapper.getMessage(null);
             fail("Expected error");
@@ -62,14 +63,14 @@ public class WebDriverAsyncWrapperExampleTest {
 
     @Test
     public void testWithoutArgument() throws Exception {
-        final WebDriverAsyncWrapperExample wrapper = new WebDriverAsyncWrapperExample(webDriver, 5000);
+        final WebDriverAsyncWrapper wrapper = new WebDriverAsyncWrapperInjectExample(webDriver, 5000);
         wrapper.initialiseJavascript();
         assertEquals("Hello stranger!", wrapper.getMessage());
     }
 
     @Test
     public void testWithArgument() throws Exception {
-        final WebDriverAsyncWrapperExample wrapper = new WebDriverAsyncWrapperExample(webDriver, 5000);
+        final WebDriverAsyncWrapper wrapper = new WebDriverAsyncWrapperInjectExample(webDriver, 5000);
         wrapper.initialiseJavascript();
         assertEquals("Hello Charlie!", wrapper.getMessage("Charlie"));
     }
